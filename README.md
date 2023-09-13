@@ -1,10 +1,10 @@
 # f_elproyecto
 
-A new Flutter project.
+Creating a calculator with authentication login that saves info about the mathematic level of the user and else.
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+This project is a starting point for a Flutter application. :D
 
 A few resources to get you started if this is your first Flutter project:
 
