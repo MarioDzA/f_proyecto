@@ -4,9 +4,9 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
 class LoginScreen extends StatefulWidget {
-  const LoginScreen({Key? key,})
-      : super(key: key);
-
+  const LoginScreen({
+    Key? key,
+  }) : super(key: key);
 
   @override
   State<LoginScreen> createState() => _LoginScreenState();
@@ -23,7 +23,6 @@ class _LoginScreenState extends State<LoginScreen> {
     dateInput.text = ""; //set the initial value of text field
     super.initState();
   }
-   
 
   @override
   Widget build(BuildContext context) {
@@ -31,61 +30,65 @@ class _LoginScreenState extends State<LoginScreen> {
       body: Center(
         child: Padding(
           padding: const EdgeInsets.fromLTRB(20.0, 25.0, 20.0, 12.0),
-          child: Form( key: _formKey,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Text(
-                  "Enter",
-                  style: TextStyle(fontSize: 20),
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                TextFormField(
-                  key: const Key('TextFormFieldBirthday'),
-                  controller: dateInput,
-              //editing controller of this TextField
-              decoration: const InputDecoration(
-                  icon: Icon(Icons.calendar_today), //icon of text field
-                  labelText: "Enter Birth date" //label text of field
-                  ),
-              readOnly: true,
-              //set it true, so that user will not able to edit text
-              onTap: () async {
-                    DateTime? pickedDate = await showDatePicker(
-                    context: context,
-                    initialDate: DateTime.now(),
-                    firstDate: DateTime(1950),
-                    //DateTime.now() - not to allow to choose before today.
-                    lastDate: DateTime(2100));
+          child: Form(
+            key: _formKey,
+            child:
+                Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+              const Text(
+                "Enter",
+                style: TextStyle(fontSize: 20),
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              TextFormField(
+                key: const Key('TextFormFieldBirthday'),
+                controller: dateInput,
+                //editing controller of this TextField
+                decoration: const InputDecoration(
+                    icon: Icon(Icons.calendar_today), //icon of text field
+                    labelText: "Enter Birth date" //label text of field
+                    ),
+                readOnly: true,
+                //set it true, so that user will not able to edit text
+                onTap: () async {
+                  DateTime? pickedDate = await showDatePicker(
+                      context: context,
+                      initialDate: DateTime.now(),
+                      firstDate: DateTime(1950),
+                      //DateTime.now() - not to allow to choose before today.
+                      lastDate: DateTime(2100));
 
-                    String formattedDate =
+                  String formattedDate =
                       DateFormat('yyyy-MM-dd').format(pickedDate!);
-                    
-                    setState(() {
-                      dateInput.text = formattedDate;
-                    });
-              },
-                ),
-                TextFormField(
-                  key: const Key('TextFormFieldAge'),
-                  controller: _ageController,
-                  decoration: const InputDecoration(labelText: 'Age'),
-                ),
-                TextFormField(
-                  key: const Key('TextFormFieldSchool'),
-                  controller: _schoolController,
-                  decoration: const InputDecoration(labelText: 'School'),
-                ),
-                ElevatedButton(
+
+                  setState(() {
+                    dateInput.text = formattedDate;
+                  });
+                },
+              ),
+              TextFormField(
+                key: const Key('TextFormFieldAge'),
+                controller: _ageController,
+                decoration: const InputDecoration(labelText: 'Age'),
+              ),
+              TextFormField(
+                key: const Key('TextFormFieldSchool'),
+                controller: _schoolController,
+                decoration: const InputDecoration(labelText: 'School'),
+              ),
+              Container(
+                margin: const EdgeInsets.all(20),
+                child: ElevatedButton(
                   key: const Key('ButtonLoginSubmit'),
                   onPressed: () {
-                      FocusScope.of(context).requestFocus(FocusNode());
-                      final form = _formKey.currentState;
-                      form!.save();
-                      Get.to(HomePage(
-                            key: const Key('HomePage'),));
+                    FocusScope.of(context).requestFocus(FocusNode());
+                    final form = _formKey.currentState;
+                    form!.save();
+                    Get.to(() => const HomePage(
+                      key: Key('HomePage'),
+                      result: 'Undefined',
+                    ));
 /*                      if (form.validate()) {
                         if (widget.email == _emailController.text &&
                             widget.password == _passwordController.text) {
@@ -106,12 +109,14 @@ class _LoginScreenState extends State<LoginScreen> {
                         );
                         ScaffoldMessenger.of(context).showSnackBar(snackBar);
                      }
-*/                    },
+*/
+                  },
                   child: const Text('Submit'),
-          ),]
+                ),
+              )
+            ]),
           ),
-          ),
-          ),
+        ),
       ),
     );
   }
