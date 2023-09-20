@@ -1,11 +1,10 @@
 import 'package:f_elproyecto/domain/use_cases/diff_usecase.dart';
-import 'package:f_elproyecto/pages/TestPagefiles/testpage.dart';
 import 'package:f_elproyecto/pages/controllers/authcontroller.dart';
 import 'package:f_elproyecto/pages/controllers/user_controller.dart';
 import 'package:f_elproyecto/pages/login_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:loggy/loggy.dart';
+// import 'package:loggy/loggy.dart';
 
 class HomePage extends StatelessWidget {
   HomePage({
@@ -15,13 +14,13 @@ class HomePage extends StatelessWidget {
   final UserController userController = Get.find();
   final AuthenticationController authenticationController = Get.find();
 
-  _logout() async {
-    try {
-      await authenticationController.logOut();
-    } catch (e) {
-      logInfo(e);
-    }
-  }
+  // _logout() async {
+  //   try {
+  //     await authenticationController.logOut();
+  //   } catch (e) {
+  //     logInfo(e);
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -47,10 +46,7 @@ class HomePage extends StatelessWidget {
           child: ElevatedButton(
               key: const Key("TestStartButton"),
               onPressed: () {
-                handler.lvlEasy;
-                Get.to(const TestPage(
-                  key: Key('TestPage'),
-                ));
+                handler.lvlEasy();
               },
               child: const Text("Begin test"))),
     );

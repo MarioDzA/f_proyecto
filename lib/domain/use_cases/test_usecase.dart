@@ -9,5 +9,6 @@ class CasoDificultad {
     controller.setOp1(Random().nextInt(100));
     controller.setOp2(Random().nextInt(100));
     controller.setOperator("+");
+    return ;
   }
 }

@@ -15,6 +15,7 @@ class TestPage extends StatefulWidget {
 
 class _TestPagestate extends State<TestPage> {
   late final TextEditingController numberPad;
+  NumberController controller = Get.find();
 
   @override
   void initState() {
@@ -42,15 +43,9 @@ class _TestPagestate extends State<TestPage> {
   }
 
   void sendInput() {
-    if (numberPad.text == '118') {
       Get.to(HomePage(
         key: const Key('HomePage'),
       ));
-    } else {
-      Get.to(HomePage(
-        key: const Key('HomePage'),
-      ));
-    }
   }
 
   void clearAll() {
@@ -59,7 +54,6 @@ class _TestPagestate extends State<TestPage> {
 
   @override
   Widget build(BuildContext context) {
-    NumberController controller = Get.find();
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 255, 255, 255),
       body: Column(
