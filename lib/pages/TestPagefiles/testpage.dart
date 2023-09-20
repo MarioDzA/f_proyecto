@@ -1,3 +1,4 @@
+import 'package:f_elproyecto/domain/use_cases/diff_usecase.dart';
 import 'package:f_elproyecto/pages/TestPagefiles/keypad.dart';
 import 'package:f_elproyecto/pages/controllers/number_controller.dart';
 import 'package:f_elproyecto/pages/home.dart';
@@ -42,10 +43,18 @@ class _TestPagestate extends State<TestPage> {
     }
   }
 
+  var cont = 0;
+  Dificultad handler = Get.find();
   void sendInput() {
+    if (cont < 6) {
+      handler.lvlEasy();
+      cont++;
+    } else {
       Get.to(HomePage(
         key: const Key('HomePage'),
       ));
+      cont = 0;
+    }
   }
 
   void clearAll() {
