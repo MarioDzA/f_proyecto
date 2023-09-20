@@ -1,24 +1,37 @@
-import 'package:f_elproyecto/pages/TestPagefiles/testpage.dart';
+
+import 'package:f_elproyecto/pages/controllers/authcontroller.dart';
+import 'package:f_elproyecto/pages/controllers/user_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:loggy/loggy.dart';
 
 class HomePage extends StatelessWidget {
-  const HomePage({
+  HomePage({
     Key? key,
-    required this.result,
   }) : super(key: key);
-  final String result;
+
+  final UserController userController = Get.find();
+  final AuthenticationController authenticationController = Get.find();
+
+  _logout() async {
+    try {
+      await authenticationController.logOut();
+    } catch (e) {
+      logInfo(e);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Math test " "|| preview test result = $result"),
+        title: const Text("Math test"),
       ),
       body: Center(
           child: ElevatedButton(
               key: const Key("TestStartButton"),
               onPressed: () {
-                Get.to(() => const TestPage(key: Key('TestPage')));
+                _logout();
               },
               child: const Text("Begin test"))),
     );

@@ -1,27 +1,45 @@
-import 'package:f_elproyecto/pages/home.dart';
+import 'package:f_elproyecto/pages/controllers/authcontroller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:loggy/loggy.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({
+class LoginPage extends StatefulWidget {
+  const LoginPage({
     Key? key,
   }) : super(key: key);
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  State<LoginPage> createState() => _LoginPageState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _LoginPageState extends State<LoginPage> {
   final _formKey = GlobalKey<FormState>();
+  final controllerEmail = TextEditingController();
+  final controllerPassword = TextEditingController();
   final _ageController = TextEditingController();
   final _schoolController = TextEditingController();
   final dateInput = TextEditingController();
+  AuthenticationController authenticationController = Get.find();
 
   @override
   void initState() {
     dateInput.text = ""; //set the initial value of text field
     super.initState();
+  }
+
+  _login(theEmail, thePassword) async {
+    logInfo('_login $theEmail $thePassword');
+    try {
+      await authenticationController.login(theEmail, thePassword);
+    } catch (err) {
+      Get.snackbar(
+        "Login",
+        err.toString(),
+        icon: const Icon(Icons.person, color: Colors.red),
+        snackPosition: SnackPosition.BOTTOM,
+      );
+    }
   }
 
   @override
@@ -40,6 +58,15 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               const SizedBox(
                 height: 20,
+              ),
+              TextFormField(
+                key: const Key('TextFormFieldemail'),
+                controller: controllerEmail,
+                decoration: const InputDecoration(labelText: 'Email'),
+              ),TextFormField(
+                key: const Key('TextFormFieldpassword'),
+                controller: controllerPassword,
+                decoration: const InputDecoration(labelText: 'Password'),
               ),
               TextFormField(
                 key: const Key('TextFormFieldBirthday'),
@@ -81,36 +108,16 @@ class _LoginScreenState extends State<LoginScreen> {
                 margin: const EdgeInsets.all(20),
                 child: ElevatedButton(
                   key: const Key('ButtonLoginSubmit'),
-                  onPressed: () {
-                    FocusScope.of(context).requestFocus(FocusNode());
-                    final form = _formKey.currentState;
-                    form!.save();
-                    Get.to(() => const HomePage(
-                      key: Key('HomePage'),
-                      result: 'Undefined',
-                    ));
-/*                      if (form.validate()) {
-                        if (widget.email == _emailController.text &&
-                            widget.password == _passwordController.text) {
-                          Get.to(HomePage(
-                            key: const Key('HomePage'),
-                            loggedEmail: _emailController.text,
-                            loggedPassword: _passwordController.text,
-                          ));
-                        } else {
-                          const snackBar = SnackBar(
-                            content: Text('User or password nok'),
-                          );
-                          ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                        }
-                      } else {
-                        const snackBar = SnackBar(
-                          content: Text('Validation nok'),
-                        );
-                        ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                     }
-*/
-                  },
+                  onPressed: () async {
+                          // this line dismiss the keyboard by taking away the focus of the TextFormField and giving it to an unused
+                          FocusScope.of(context).requestFocus(FocusNode());
+                          final form = _formKey.currentState;
+                          form!.save();
+                          if (_formKey.currentState!.validate()) {
+                            await _login(
+                                controllerEmail.text, controllerPassword.text);
+                          }
+                        },
                   child: const Text('Submit'),
                 ),
               )

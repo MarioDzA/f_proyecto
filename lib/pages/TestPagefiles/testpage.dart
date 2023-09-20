@@ -12,6 +12,7 @@ class TestPage extends StatefulWidget {
   State<TestPage> createState() => _TestPagestate();
 }
 
+
 class _TestPagestate extends State<TestPage> {
   late final TextEditingController numberPad;
 
@@ -39,8 +40,13 @@ class _TestPagestate extends State<TestPage> {
       );
     }
   }
+  
   void sendInput() {
-    Get.to(HomePage( key: const Key('HomePage'), result: numberPad.text,));
+    if(numberPad.text == '118'){
+    Get.to( HomePage( key: const Key('HomePage'),));
+    }else{
+    Get.to( HomePage( key: const Key('HomePage'),));
+    }
   }
 
   void clearAll() {
@@ -58,7 +64,7 @@ class _TestPagestate extends State<TestPage> {
             child: Padding(
                 padding: EdgeInsets.symmetric(horizontal: 12),
                 key: Key("ExcerciseText"),
-                child: Text('Excercise here')),
+                child: Text('43 + 75', style: TextStyle(fontSize: 100),)),
           )),
           Expanded(
             child: Center(
