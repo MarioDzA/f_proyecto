@@ -1,3 +1,4 @@
+import 'package:f_elproyecto/domain/use_cases/diff_usecase.dart';
 import 'package:f_elproyecto/pages/TestPagefiles/testpage.dart';
 import 'package:f_elproyecto/pages/controllers/authcontroller.dart';
 import 'package:f_elproyecto/pages/controllers/user_controller.dart';
@@ -24,6 +25,7 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Dificultad handler = Get.find();
     return Scaffold(
       appBar: AppBar(
         title: const Text("Math test"),
@@ -34,8 +36,8 @@ class HomePage extends StatelessWidget {
             tooltip: 'logout',
             onPressed: () {
               Get.to(const LoginPage(
-                  key: Key('LoginPage'),
-                ));
+                key: Key('LoginPage'),
+              ));
               // _logout();
             },
           ),
@@ -45,6 +47,7 @@ class HomePage extends StatelessWidget {
           child: ElevatedButton(
               key: const Key("TestStartButton"),
               onPressed: () {
+                handler.lvlEasy;
                 Get.to(const TestPage(
                   key: Key('TestPage'),
                 ));

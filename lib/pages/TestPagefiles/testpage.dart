@@ -1,4 +1,5 @@
 import 'package:f_elproyecto/pages/TestPagefiles/keypad.dart';
+import 'package:f_elproyecto/pages/controllers/number_controller.dart';
 import 'package:f_elproyecto/pages/home.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -11,7 +12,6 @@ class TestPage extends StatefulWidget {
   @override
   State<TestPage> createState() => _TestPagestate();
 }
-
 
 class _TestPagestate extends State<TestPage> {
   late final TextEditingController numberPad;
@@ -40,12 +40,16 @@ class _TestPagestate extends State<TestPage> {
       );
     }
   }
-  
+
   void sendInput() {
-    if(numberPad.text == '118'){
-    Get.to( HomePage( key: const Key('HomePage'),));
-    }else{
-    Get.to( HomePage( key: const Key('HomePage'),));
+    if (numberPad.text == '118') {
+      Get.to(HomePage(
+        key: const Key('HomePage'),
+      ));
+    } else {
+      Get.to(HomePage(
+        key: const Key('HomePage'),
+      ));
     }
   }
 
@@ -55,16 +59,32 @@ class _TestPagestate extends State<TestPage> {
 
   @override
   Widget build(BuildContext context) {
+    NumberController controller = Get.find();
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 255, 255, 255),
       body: Column(
         children: <Widget>[
-          const Expanded(
+          Expanded(
               child: Center(
             child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 12),
-                key: Key("ExcerciseText"),
-                child: Text('43 + 75', style: TextStyle(fontSize: 100),)),
+                padding: const EdgeInsets.fromLTRB(0, 15, 0, 15),
+                child: SizedBox(
+                    child: Row(
+                  children: [
+                    Expanded(
+                        child: Obx(() => Text(controller.op1.toString(),
+                            textAlign: TextAlign.center,
+                            style: const TextStyle(fontSize: 50)))),
+                    Expanded(
+                        child: Obx(() => Text(controller.operator.toString(),
+                            textAlign: TextAlign.center,
+                            style: const TextStyle(fontSize: 50)))),
+                    Expanded(
+                        child: Obx(() => Text(controller.op2.toString(),
+                            textAlign: TextAlign.center,
+                            style: const TextStyle(fontSize: 50)))),
+                  ],
+                ))),
           )),
           Expanded(
             child: Center(
