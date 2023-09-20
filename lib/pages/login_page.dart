@@ -1,4 +1,5 @@
 import 'package:f_elproyecto/pages/controllers/authcontroller.dart';
+import 'package:f_elproyecto/pages/home.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -17,7 +18,7 @@ class _LoginPageState extends State<LoginPage> {
   final _formKey = GlobalKey<FormState>();
   final controllerEmail = TextEditingController();
   final controllerPassword = TextEditingController();
-  final _ageController = TextEditingController();
+  final _gradeController = TextEditingController();
   final _schoolController = TextEditingController();
   final dateInput = TextEditingController();
   AuthenticationController authenticationController = Get.find();
@@ -96,8 +97,8 @@ class _LoginPageState extends State<LoginPage> {
               ),
               TextFormField(
                 key: const Key('TextFormFieldAge'),
-                controller: _ageController,
-                decoration: const InputDecoration(labelText: 'Age'),
+                controller: _gradeController,
+                decoration: const InputDecoration(labelText: 'Grade'),
               ),
               TextFormField(
                 key: const Key('TextFormFieldSchool'),
@@ -108,16 +109,17 @@ class _LoginPageState extends State<LoginPage> {
                 margin: const EdgeInsets.all(20),
                 child: ElevatedButton(
                   key: const Key('ButtonLoginSubmit'),
-                  onPressed: () async {
-                          // this line dismiss the keyboard by taking away the focus of the TextFormField and giving it to an unused
-                          FocusScope.of(context).requestFocus(FocusNode());
-                          final form = _formKey.currentState;
-                          form!.save();
-                          if (_formKey.currentState!.validate()) {
-                            await _login(
-                                controllerEmail.text, controllerPassword.text);
-                          }
-                        },
+                   onPressed: (){Get.to( HomePage( key: const Key('HomePage'),));},
+                  //() async {
+                  //         // this line dismiss the keyboard by taking away the focus of the TextFormField and giving it to an unused
+                  //         FocusScope.of(context).requestFocus(FocusNode());
+                  //         final form = _formKey.currentState;
+                  //         form!.save();
+                  //         if (_formKey.currentState!.validate()) {
+                  //           await _login(
+                  //               controllerEmail.text, controllerPassword.text);
+                  //         }
+                  //       },
                   child: const Text('Submit'),
                 ),
               )
