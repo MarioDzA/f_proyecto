@@ -57,13 +57,8 @@ class NumberController extends GetxController {
             caso.changeScore(newScore);
             UserDataSource().updateUser(User(
                 id: 4,
-                firstName: 'David',
-                lastName: 'Diaz',
                 email: 'elemail',
                 password: '2315435',
-                birthday: '10123662301',
-                grade: '5',
-                school: 'IDPHU',
                 score: casehandler.score));
             cont = 0;
             stopwatch.reset();
@@ -74,9 +69,9 @@ class NumberController extends GetxController {
         }
       case "*":
         if (op1 * op2 == int.parse(result)) {
-          //insertar llamado a función que actualice la operación
-          if (cont < 6) {
+          if (cont < 5) {
             caso.generateCase();
+            cont++;
           } else {
             stopwatch.stop();
             if (caso.score <= 500) {
@@ -86,7 +81,17 @@ class NumberController extends GetxController {
             } else {
               newScore = (stopwatch.elapsed.inSeconds);
             }
+            Get.to(HomePage(
+              key: const Key('HomePage'),
+            ));
+            cont = 0;
             caso.changeScore(newScore);
+            UserDataSource().updateUser(User(
+                id: 4,
+                email: 'elemail',
+                password: '2315435',
+                score: casehandler.score));
+            cont = 0;
             stopwatch.reset();
           }
           resetResult();
