@@ -26,8 +26,8 @@ void main() {
   Get.put(UserUseCase());
   Get.put(AuthenticationController());
   Get.put(UserController());
-  Get.put(NumberController());
   Get.put(CasoDificultad());
+  Get.put(NumberController());
   Get.put(Dificultad());
   runApp(const MyApp());
 }

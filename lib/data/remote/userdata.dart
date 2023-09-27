@@ -4,11 +4,11 @@ import '../../../domain/model/user_model.dart';
 import 'package:http/http.dart' as http;
 
 class UserDataSource {
-  final String apiKey = 'I0rvOu';
+  final String apiKey = 'wm4h2f';
 
   Future<List<User>> getUsers() async {
     List<User> users = [];
-    var request = Uri.parse("https://retoolapi.dev/$apiKey/proyect_data")
+    var request = Uri.parse("https://retoolapi.dev/$apiKey/MovilDataAPI")
         .resolveUri(Uri(queryParameters: {
       "format": 'json',
     }));
@@ -28,11 +28,33 @@ class UserDataSource {
     return Future.value(users);
   }
 
+  Future<User> getUser(int id) async {
+    User userdata;
+    var request = Uri.parse("https://retoolapi.dev/$apiKey/MovilDataAPI/$id")
+        .resolveUri(Uri(queryParameters: {
+      "format": 'json',
+    }));
+
+    var response = await http.get(request);
+
+    if (response.statusCode == 200) {
+      //logInfo(response.body);
+      final data = jsonDecode(response.body);
+
+      userdata = User.fromJson(data);
+    } else {
+      logError("Got error code ${response.statusCode}");
+      return Future.error('Error code ${response.statusCode}');
+    }
+
+    return Future.value(userdata);
+  }
+
   Future<bool> addUser(User user) async {
     logInfo("Web service, Adding user");
 
     final response = await http.post(
-      Uri.parse("https://retoolapi.dev/$apiKey/proyect_data"),
+      Uri.parse("https://retoolapi.dev/$apiKey/MovilDataAPI"),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
@@ -50,14 +72,14 @@ class UserDataSource {
 
   Future<bool> updateUser(User user) async {
     final response = await http.put(
-      Uri.parse("https://retoolapi.dev/$apiKey/proyect_data/${user.id}"),
+      Uri.parse("https://retoolapi.dev/$apiKey/MovilDataAPI/${user.id}"),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
       body: jsonEncode(user.toJson()),
     );
 
-    if (response.statusCode == 201) {
+    if (response.statusCode == 200) {
       //logInfo(response.body);
       return Future.value(true);
     } else {
@@ -68,7 +90,7 @@ class UserDataSource {
 
   Future<bool> deleteUser(int id) async {
     final response = await http.delete(
-      Uri.parse("https://retoolapi.dev/$apiKey/proyect_data/$id"),
+      Uri.parse("https://retoolapi.dev/$apiKey/MovilDataAPI/$id"),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },

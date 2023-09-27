@@ -1,4 +1,6 @@
+import 'package:f_elproyecto/data/remote/userdata.dart';
 import 'package:f_elproyecto/domain/use_cases/diff_usecase.dart';
+import 'package:f_elproyecto/domain/use_cases/test_usecase.dart';
 import 'package:f_elproyecto/pages/controllers/authcontroller.dart';
 import 'package:f_elproyecto/pages/controllers/user_controller.dart';
 import 'package:f_elproyecto/pages/login_page.dart';
@@ -25,6 +27,7 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Dificultad handler = Get.find();
+    CasoDificultad casehandler = Get.find();
     return Scaffold(
       appBar: AppBar(
         title: const Text("Math test"),
@@ -45,8 +48,11 @@ class HomePage extends StatelessWidget {
       body: Center(
           child: ElevatedButton(
               key: const Key("TestStartButton"),
-              onPressed: () {
-                handler.lvlEasy();
+              onPressed: () async {
+                //Gens base case
+                var user = await UserDataSource().getUser(4);
+                casehandler.changeScore(user.score!);
+                handler.casegenerator();
               },
               child: const Text("Begin test"))),
     );

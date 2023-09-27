@@ -1,7 +1,7 @@
 import 'package:f_elproyecto/domain/use_cases/diff_usecase.dart';
+import 'package:f_elproyecto/domain/use_cases/test_usecase.dart';
 import 'package:f_elproyecto/pages/TestPagefiles/keypad.dart';
 import 'package:f_elproyecto/pages/controllers/number_controller.dart';
-import 'package:f_elproyecto/pages/home.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -17,6 +17,7 @@ class TestPage extends StatefulWidget {
 class _TestPagestate extends State<TestPage> {
   late final TextEditingController numberPad;
   NumberController controller = Get.find();
+  CasoDificultad casehandler = Get.find();
 
   @override
   void initState() {
@@ -32,6 +33,8 @@ class _TestPagestate extends State<TestPage> {
 
   void inputNumber(int value) {
     numberPad.text += value.toString();
+    controller.resetResult();
+    controller.setResult(numberPad.text);
   }
 
   void clearLastInput() {
@@ -43,18 +46,11 @@ class _TestPagestate extends State<TestPage> {
     }
   }
 
-  var cont = 0;
   Dificultad handler = Get.find();
   void sendInput() {
-    if (cont < 6) {
-      handler.lvlEasy();
-      cont++;
-    } else {
-      Get.to(HomePage(
-        key: const Key('HomePage'),
-      ));
-      cont = 0;
-    }
+    controller.checkOperation();
+    controller.resetResult();
+    clearAll();
   }
 
   void clearAll() {

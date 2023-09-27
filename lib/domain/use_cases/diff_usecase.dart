@@ -6,7 +6,7 @@ import 'package:get/get.dart';
 class Dificultad {
   final CasoDificultad caso = Get.find();
 
-  lvlEasy() {
+  casegenerator() {
     caso.generateCase();
     caso.controller.stopwatch.start();
     Get.to(const TestPage(
