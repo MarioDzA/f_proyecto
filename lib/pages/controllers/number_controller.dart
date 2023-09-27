@@ -43,13 +43,7 @@ class NumberController extends GetxController {
             cont++;
           } else {
             stopwatch.stop();
-            if (caso.score <= 500) {
-              newScore = (stopwatch.elapsed.inSeconds);
-            } else if (caso.score <= 1000) {
-              newScore = (stopwatch.elapsed.inSeconds);
-            } else {
-              newScore = (stopwatch.elapsed.inSeconds);
-            }
+            newScore = (stopwatch.elapsed.inSeconds);
             Get.to(HomePage(
               key: const Key('HomePage'),
             ));
@@ -74,13 +68,62 @@ class NumberController extends GetxController {
             cont++;
           } else {
             stopwatch.stop();
-            if (caso.score <= 500) {
-              newScore = (stopwatch.elapsed.inSeconds);
-            } else if (caso.score <= 1000) {
-              newScore = (stopwatch.elapsed.inSeconds);
-            } else {
-              newScore = (stopwatch.elapsed.inSeconds);
-            }
+            newScore = (stopwatch.elapsed.inSeconds);
+
+            Get.to(HomePage(
+              key: const Key('HomePage'),
+            ));
+            cont = 0;
+            caso.changeScore(newScore);
+            UserDataSource().updateUser(User(
+                id: 4,
+                email: 'elemail',
+                password: '2315435',
+                score: casehandler.score));
+            cont = 0;
+            stopwatch.reset();
+          }
+          resetResult();
+        } else {
+          resetResult();
+        }
+      case "-":
+        if (op1 - op2 == int.parse(result)) {
+          if (cont < 5) {
+            caso.generateCase();
+            cont++;
+          } else {
+            stopwatch.stop();
+
+            newScore = (stopwatch.elapsed.inSeconds);
+
+            Get.to(HomePage(
+              key: const Key('HomePage'),
+            ));
+            cont = 0;
+            caso.changeScore(newScore);
+            UserDataSource().updateUser(User(
+                id: 4,
+                email: 'elemail',
+                password: '2315435',
+                score: casehandler.score));
+            cont = 0;
+            stopwatch.reset();
+          }
+          resetResult();
+        } else {
+          resetResult();
+        }
+      case "/":
+        if (op1 / op2 == int.parse(result)) {
+          if (cont < 5) {
+            caso.generateCase();
+            cont++;
+          } else {
+            stopwatch.stop();
+
+            newScore = (stopwatch.elapsed.inSeconds);
+
             Get.to(HomePage(
               key: const Key('HomePage'),
             ));
