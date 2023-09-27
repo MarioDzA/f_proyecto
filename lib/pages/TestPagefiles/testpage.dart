@@ -48,7 +48,7 @@ class _TestPagestate extends State<TestPage> {
 
   Dificultad handler = Get.find();
   void sendInput() {
-    controller.checkOperation();
+    casehandler.checkOperation();
     controller.resetResult();
     clearAll();
   }

@@ -1,14 +1,6 @@
-import 'package:f_elproyecto/data/remote/userdata.dart';
-import 'package:f_elproyecto/domain/model/user_model.dart';
-import 'package:f_elproyecto/domain/use_cases/test_usecase.dart';
-import 'package:f_elproyecto/pages/home.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 
 class NumberController extends GetxController {
-  final CasoDificultad caso = Get.find();
-  CasoDificultad casehandler = Get.find();
-  final stopwatch = Stopwatch();
   final _op1 = 0.obs;
   final _op2 = 0.obs;
   final _operator = "+".obs;
@@ -30,119 +22,6 @@ class NumberController extends GetxController {
       _result.value = _result.value.substring(0, _result.value.length - 1);
     } else {
       null;
-    }
-  }
-
-  checkOperation() {
-    int newScore = 0;
-    switch (operator) {
-      case "+":
-        if (op1 + op2 == int.parse(result)) {
-          if (cont < 5) {
-            caso.generateCase();
-            cont++;
-          } else {
-            stopwatch.stop();
-            newScore = (stopwatch.elapsed.inSeconds);
-            Get.to(HomePage(
-              key: const Key('HomePage'),
-            ));
-            cont = 0;
-            caso.changeScore(newScore);
-            UserDataSource().updateUser(User(
-                id: 4,
-                email: 'elemail',
-                password: '2315435',
-                score: casehandler.score));
-            cont = 0;
-            stopwatch.reset();
-          }
-          resetResult();
-        } else {
-          resetResult();
-        }
-      case "*":
-        if (op1 * op2 == int.parse(result)) {
-          if (cont < 5) {
-            caso.generateCase();
-            cont++;
-          } else {
-            stopwatch.stop();
-            newScore = (stopwatch.elapsed.inSeconds);
-
-            Get.to(HomePage(
-              key: const Key('HomePage'),
-            ));
-            cont = 0;
-            caso.changeScore(newScore);
-            UserDataSource().updateUser(User(
-                id: 4,
-                email: 'elemail',
-                password: '2315435',
-                score: casehandler.score));
-            cont = 0;
-            stopwatch.reset();
-          }
-          resetResult();
-        } else {
-          resetResult();
-        }
-      case "-":
-        if (op1 - op2 == int.parse(result)) {
-          if (cont < 5) {
-            caso.generateCase();
-            cont++;
-          } else {
-            stopwatch.stop();
-
-            newScore = (stopwatch.elapsed.inSeconds);
-
-            Get.to(HomePage(
-              key: const Key('HomePage'),
-            ));
-            cont = 0;
-            caso.changeScore(newScore);
-            UserDataSource().updateUser(User(
-                id: 4,
-                email: 'elemail',
-                password: '2315435',
-                score: casehandler.score));
-            cont = 0;
-            stopwatch.reset();
-          }
-          resetResult();
-        } else {
-          resetResult();
-        }
-      case "/":
-        if (op1 / op2 == int.parse(result)) {
-          if (cont < 5) {
-            caso.generateCase();
-            cont++;
-          } else {
-            stopwatch.stop();
-
-            newScore = (stopwatch.elapsed.inSeconds);
-
-            Get.to(HomePage(
-              key: const Key('HomePage'),
-            ));
-            cont = 0;
-            caso.changeScore(newScore);
-            UserDataSource().updateUser(User(
-                id: 4,
-                email: 'elemail',
-                password: '2315435',
-                score: casehandler.score));
-            cont = 0;
-            stopwatch.reset();
-          }
-          resetResult();
-        } else {
-          resetResult();
-        }
-      default:
-        null;
     }
   }
 }

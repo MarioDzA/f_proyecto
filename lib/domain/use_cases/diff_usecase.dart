@@ -8,7 +8,7 @@ class Dificultad {
 
   casegenerator() {
     caso.generateCase();
-    caso.controller.stopwatch.start();
+    caso.stopwatch.start();
     Get.to(const TestPage(
       key: Key('TestPage'),
     ));
