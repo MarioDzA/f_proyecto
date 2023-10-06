@@ -1,31 +1,29 @@
-import 'package:f_elproyecto/data/remote/userdata.dart';
+import 'package:f_elproyecto/data/local/localstorage.dart';
 import 'package:f_elproyecto/domain/use_cases/diff_usecase.dart';
 import 'package:f_elproyecto/domain/use_cases/test_usecase.dart';
 import 'package:f_elproyecto/pages/controllers/authcontroller.dart';
-import 'package:f_elproyecto/pages/controllers/user_controller.dart';
-import 'package:f_elproyecto/pages/login_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-// import 'package:loggy/loggy.dart';
+import 'package:loggy/loggy.dart';
 
 class HomePage extends StatelessWidget {
   HomePage({
     Key? key,
   }) : super(key: key);
 
-  final UserController userController = Get.find();
   final AuthenticationController authenticationController = Get.find();
 
-  // _logout() async {
-  //   try {
-  //     await authenticationController.logOut();
-  //   } catch (e) {
-  //     logInfo(e);
-  //   }
-  // }
+  _logout() async {
+    try {
+      await authenticationController.logOut();
+    } catch (e) {
+      logInfo(e);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
+    final sharedPreferences = LocalPreferences();
     Dificultad handler = Get.find();
     CasoDificultad casehandler = Get.find();
     return Scaffold(
@@ -37,10 +35,7 @@ class HomePage extends StatelessWidget {
             icon: const Icon(Icons.exit_to_app),
             tooltip: 'logout',
             onPressed: () {
-              Get.to(const LoginPage(
-                key: Key('LoginPage'),
-              ));
-              // _logout();
+              _logout();
             },
           ),
         ],
@@ -50,8 +45,12 @@ class HomePage extends StatelessWidget {
               key: const Key("TestStartButton"),
               onPressed: () async {
                 //Gens base case
-                var user = await UserDataSource().getUser(4);
-                casehandler.changeScore(user.score!);
+                var score = await sharedPreferences.retrieveData('score');
+                if (score != null){
+                casehandler.changeScore(score);
+                }else{
+                casehandler.changeScore(100);
+                }
                 handler.casegenerator();
               },
               child: const Text("Begin test"))),

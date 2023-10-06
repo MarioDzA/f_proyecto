@@ -1,3 +1,4 @@
+import 'package:f_elproyecto/data/remote/userdata.dart';
 import 'package:f_elproyecto/domain/use_cases/diff_usecase.dart';
 import 'package:f_elproyecto/domain/use_cases/test_usecase.dart';
 import 'package:f_elproyecto/pages/controllers/authcontroller.dart';
@@ -9,7 +10,6 @@ import 'pages/login_page.dart';
 import 'pages/home.dart';
 
 import 'package:f_elproyecto/domain/use_cases/user_usecase.dart';
-import 'package:f_elproyecto/pages/controllers/user_controller.dart';
 import 'package:loggy/loggy.dart';
 
 import 'domain/repo/repository.dart';
@@ -21,16 +21,17 @@ void main() {
       showColors: true,
     ),
   );
+  Get.put(UserDataSource());
   Get.put(Repository());
   Get.put(AuthenticationUseCase());
   Get.put(UserUseCase());
   Get.put(AuthenticationController());
-  Get.put(UserController());
   Get.put(CasoDificultad());
   Get.put(NumberController());
   Get.put(Dificultad());
   runApp(const MyApp());
 }
+
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
@@ -38,6 +39,7 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+
     AuthenticationController authenticationController = Get.find();
     return GetMaterialApp(
         title: 'Math App',

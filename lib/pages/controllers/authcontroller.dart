@@ -10,15 +10,20 @@ class AuthenticationController extends GetxController {
 
   Future<void> login(email, password) async {
     final AuthenticationUseCase authentication = Get.find();
-    await authentication.login(email, password);
-    logged.value = true;
+    if (await authentication.login(email, password)) {
+      logged.value = true;
+    } else {
+      throw 'Need password';
+    }
   }
 
-  Future<bool> signUp(email, password) async {
+  Future<void> signUp(form) async {
     final AuthenticationUseCase authentication = Get.find();
     logInfo('Controller Sign Up');
-    await authentication.signUp(email, password);
-    return true;
+    if (await authentication.signUp(form)) {
+    } else {
+      throw "user couldn't be created";
+    }
   }
 
   Future<void> logOut() async {

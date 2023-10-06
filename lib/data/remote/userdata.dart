@@ -50,15 +50,37 @@ class UserDataSource {
     return Future.value(userdata);
   }
 
-  Future<bool> addUser(User user) async {
-    logInfo("Web service, Adding user");
+  Future<User> getUserbyquery(String email) async {
+    User userdata;
+    var request = Uri.parse("https://retoolapi.dev/$apiKey/MovilDataAPI/")
+        .resolveUri(Uri(queryParameters: {
+      "email": email,
+      "format": 'json',
+    }));
 
+    var response = await http.get(request);
+    if (response.statusCode == 200) {
+      //logInfo(response.body);
+      final data = jsonDecode(response.body)[0];
+
+      userdata = User.fromJson(data);
+    } else {
+      logError("Got error code ${response.statusCode}");
+      return Future.error('Error code ${response.statusCode}');
+    }
+
+    return Future.value(userdata);
+  }
+
+  Future<bool> addUser(Object user) async {
+    logInfo("Web service, Adding user");
+    print(user);
     final response = await http.post(
       Uri.parse("https://retoolapi.dev/$apiKey/MovilDataAPI"),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
-      body: jsonEncode(user.toJson()),
+      body: jsonEncode(user),
     );
 
     if (response.statusCode == 201) {
@@ -71,12 +93,12 @@ class UserDataSource {
   }
 
   Future<bool> updateUser(User user) async {
-    final response = await http.put(
+    final response = await http.patch(
       Uri.parse("https://retoolapi.dev/$apiKey/MovilDataAPI/${user.id}"),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
-      body: jsonEncode(user.toJson()),
+      body: jsonEncode(user),
     );
 
     if (response.statusCode == 200) {

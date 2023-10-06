@@ -1,14 +1,32 @@
-import 'package:f_elproyecto/domain/repo/repository.dart';
+import 'package:f_elproyecto/data/local/localstorage.dart';
+import 'package:f_elproyecto/data/remote/userdata.dart';
 import 'package:get/get.dart';
 
 class AuthenticationUseCase {
-  final Repository _repository = Get.find();
+  final sharedPreferences = LocalPreferences();
+  final UserDataSource dBdata = Get.find();
 
-  Future<bool> login(String email, String password) async =>
-      await _repository.login(email, password);
+  Future<bool> login(String email, String password) async {
+    var user = await dBdata.getUserbyquery(email);
+    print(user.id);
+    if (user.password == password) {
+      sharedPreferences.storeData("email", user.email);
+      sharedPreferences.storeData("password", user.password);
+      sharedPreferences.storeData<int>("id", user.id as int);
+      sharedPreferences.storeData("score", user.score);
+      return true;
+    } else {
+      return false;
+    }
+  }
 
-  Future<bool> signUp(String email, String password) async =>
-      await _repository.signUp(email, password);
-
-  Future<bool> logOut() async => await _repository.logOut();
+  Future<bool> signUp(form) async {
+    if (await dBdata.addUser(form)) {
+      print('user created');
+      print('saving local values');
+      return true;
+    } else {
+      return false;
+    }
+  }
 }

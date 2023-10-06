@@ -1,14 +1,14 @@
 class User {
   User({
     this.id,
-     this.firstName,
-     this.lastName,
+    this.firstName,
+    this.lastName,
     required this.email,
     required this.password,
-     this.birthday,
-     this.grade,
-     this.school,
-     this.score,
+    this.birthday,
+    this.grade,
+    this.school,
+    this.score,
   });
 
   int? id;
@@ -38,15 +38,15 @@ class User {
         birthday: json["birthday"] ?? "somebirthday",
         grade: json["grade"] ?? "somegrade",
         school: json["school"] ?? "someschool",
-        score: json["score"] ?? "somescore",
+        score: json["score"] ?? 100000,
       );
 
   Map<String, dynamic> toJson() => {
-        "id": id ?? 0,
+        "id": id,
         "firstName": firstName,
         "lastName": lastName,
         "email": email,
-        "password": email,
+        "password": password,
         "birthday": birthday,
         "grade": grade,
         "school": school,
