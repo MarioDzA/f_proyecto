@@ -8,8 +8,6 @@ import 'package:get/get.dart';
 
 import 'pages/login_page.dart';
 import 'pages/home.dart';
-
-import 'package:f_elproyecto/domain/use_cases/user_usecase.dart';
 import 'package:loggy/loggy.dart';
 
 import 'domain/repo/repository.dart';
@@ -24,7 +22,6 @@ void main() {
   Get.put(UserDataSource());
   Get.put(Repository());
   Get.put(AuthenticationUseCase());
-  Get.put(UserUseCase());
   Get.put(AuthenticationController());
   Get.put(CasoDificultad());
   Get.put(NumberController());

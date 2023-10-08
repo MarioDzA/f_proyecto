@@ -1,9 +1,6 @@
 import 'dart:math';
 import 'package:f_elproyecto/data/local/localstorage.dart';
-import 'package:f_elproyecto/domain/model/user_model.dart';
-import 'package:f_elproyecto/pages/home.dart';
-import 'package:flutter/widgets.dart';
-import 'package:f_elproyecto/data/remote/userdata.dart';
+import 'package:f_elproyecto/domain/repo/repository.dart';
 import 'package:f_elproyecto/pages/controllers/number_controller.dart';
 import 'package:get/get.dart';
 
@@ -36,55 +33,21 @@ class CasoDificultad {
   }
 
   updateuserafter(score) async {
-    User user = User(
-        id: await sharedPreferences.retrieveData("id"),
-        email: await sharedPreferences.retrieveData('email'),
-        password: await sharedPreferences.retrieveData('password'),
-        score: score);
-
-    await UserDataSource().updateUser(user);
+    Repository().updateUser(score);
   }
 
-  checkOperation() {
+  checkOperation(op1, op2, result, operator, cont) {
     int newScore = 0;
-    switch (controller.operator) {
+    switch (operator) {
       case "+":
-        if (controller.op1 + controller.op2 == int.parse(controller.result)) {
-          if (controller.cont < 5) {
+        if (op1 + op2 == int.parse(result)) {
+          if (cont < 5) {
             generateCase();
-            controller.cont++;
           } else {
             stopwatch.stop();
             newScore = (stopwatch.elapsed.inSeconds);
-            Get.to(HomePage(
-              key: const Key('HomePage'),
-            ));
-            controller.cont = 0;
             changeScore(newScore);
             updateuserafter(score);
-            controller.cont = 0;
-            stopwatch.reset();
-          }
-          controller.resetResult();
-        } else {
-          controller.resetResult();
-        }
-      case "*":
-        if (controller.op1 * controller.op2 == int.parse(controller.result)) {
-          if (controller.cont < 5) {
-            generateCase();
-            controller.cont++;
-          } else {
-            stopwatch.stop();
-            newScore = (stopwatch.elapsed.inSeconds);
-
-            Get.to(HomePage(
-              key: const Key('HomePage'),
-            ));
-            controller.cont = 0;
-            changeScore(newScore);
-            updateuserafter(score);
-            controller.cont = 0;
             stopwatch.reset();
           }
           controller.resetResult();
@@ -92,22 +55,29 @@ class CasoDificultad {
           controller.resetResult();
         }
       case "-":
-        if (controller.op1 - controller.op2 == int.parse(controller.result)) {
-          if (controller.cont < 5) {
+        if (op1 - op2 == int.parse(result)) {
+          if (cont < 5) {
             generateCase();
-            controller.cont++;
           } else {
             stopwatch.stop();
-
             newScore = (stopwatch.elapsed.inSeconds);
-
-            Get.to(HomePage(
-              key: const Key('HomePage'),
-            ));
-            controller.cont = 0;
             changeScore(newScore);
             updateuserafter(score);
-            controller.cont = 0;
+            stopwatch.reset();
+          }
+          controller.resetResult();
+        } else {
+          controller.resetResult();
+        }
+      case "*":
+        if (op1 * op2 == int.parse(result)) {
+          if (cont < 5) {
+            generateCase();
+          } else {
+            stopwatch.stop();
+            newScore = (stopwatch.elapsed.inSeconds);
+            changeScore(newScore);
+            updateuserafter(score);
             stopwatch.reset();
           }
           controller.resetResult();
@@ -115,23 +85,14 @@ class CasoDificultad {
           controller.resetResult();
         }
       case "/":
-        if ((controller.op1 / controller.op2).round() ==
-            int.parse(controller.result)) {
-          if (controller.cont < 5) {
+        if (op1 / op2 == int.parse(result)) {
+          if (cont < 5) {
             generateCase();
-            controller.cont++;
           } else {
             stopwatch.stop();
-
             newScore = (stopwatch.elapsed.inSeconds);
-
-            Get.to(HomePage(
-              key: const Key('HomePage'),
-            ));
-            controller.cont = 0;
             changeScore(newScore);
             updateuserafter(score);
-            controller.cont = 0;
             stopwatch.reset();
           }
           controller.resetResult();

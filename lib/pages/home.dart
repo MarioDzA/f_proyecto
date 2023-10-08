@@ -1,6 +1,7 @@
-import 'package:f_elproyecto/data/local/localstorage.dart';
+import 'package:f_elproyecto/domain/repo/repository.dart';
 import 'package:f_elproyecto/domain/use_cases/diff_usecase.dart';
 import 'package:f_elproyecto/domain/use_cases/test_usecase.dart';
+import 'package:f_elproyecto/pages/TestPagefiles/testpage.dart';
 import 'package:f_elproyecto/pages/controllers/authcontroller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -16,6 +17,7 @@ class HomePage extends StatelessWidget {
   _logout() async {
     try {
       await authenticationController.logOut();
+      print('saliendo');
     } catch (e) {
       logInfo(e);
     }
@@ -23,7 +25,6 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final sharedPreferences = LocalPreferences();
     Dificultad handler = Get.find();
     CasoDificultad casehandler = Get.find();
     return Scaffold(
@@ -44,14 +45,23 @@ class HomePage extends StatelessWidget {
           child: ElevatedButton(
               key: const Key("TestStartButton"),
               onPressed: () async {
-                //Gens base case
-                var score = await sharedPreferences.retrieveData('score');
-                if (score != null){
-                casehandler.changeScore(score);
-                }else{
-                casehandler.changeScore(100);
+                try {
+                  //Gens base case
+                  //solve this shit...
+                  print(Repository().getscore());
+                  // int score = ;
+                  // if (score != 0) {
+                  //   casehandler.changeScore(score);
+                  // } else {
+                  //   casehandler.changeScore(100);
+                  // }
+                  // handler.casegenerator();
+                  // Get.to(const TestPage(
+                  //   key: Key('TestPage'),
+                  // ));
+                } catch (e) {
+                  print(e);
                 }
-                handler.casegenerator();
               },
               child: const Text("Begin test"))),
     );

@@ -1,43 +1,61 @@
+import 'package:f_elproyecto/data/local/localstorage.dart';
 import 'package:f_elproyecto/data/remote/authdata.dart';
-
-import '../../data/remote/userdata.dart';
+import 'package:f_elproyecto/data/remote/userdata.dart';
+import 'package:get/get.dart';
 import '../model/user_model.dart';
 
 class Repository {
   late AuthenticationDatasource _authenticationDataSource;
   late UserDataSource _userDatatasource;
-  String token = "";
-
-  // the base url of the API should end without the /
-  final String _baseUrl =
-      "http://ip172-19-0-50-ck50bkcsnmng009j8hp0-8000.direct.labs.play-with-docker.com";
+  final UserDataSource dBdata = Get.find();
+  final sharedPreferences = LocalPreferences();
 
   Repository() {
     _authenticationDataSource = AuthenticationDatasource();
-    _userDatatasource = UserDataSource();
   }
 
   Future<bool> login(String email, String password) async {
-    token = await _authenticationDataSource.login(_baseUrl, email, password);
-    return true;
+    var user = await dBdata.getUserbyquery(email);
+    if (user.password == password) {
+      sharedPreferences.storeData("email", user.email);
+      sharedPreferences.storeData("password", user.password);
+      sharedPreferences.storeData<int>("id", user.id as int);
+      sharedPreferences.storeData<int>("score", user.score as int);
+      return true;
+    } else {
+      return false;
+    }
   }
 
-  Future<bool> signUp(String email, String password) async =>
-      await _authenticationDataSource.signUp(_baseUrl, email, password);
+  Future<bool> signUp(form) async {
+    if (await dBdata.addUser(form)) {
+      print('user created');
+      print('saving local values');
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  Future<int> getscore() async {
+    int score = await sharedPreferences.retrieveData("score");
+    return score;
+  }
 
   Future<bool> logOut() async => await _authenticationDataSource.logOut();
 
   Future<List<User>> getUsers() async => await _userDatatasource.getUsers();
 
-  Future<bool> addUser(User user) async =>
-      await _userDatatasource.addUser(user);
+  Future<void> updateUser(score) async {
+    User user = User(
+        id: await sharedPreferences.retrieveData("id"),
+        email: await sharedPreferences.retrieveData('email'),
+        password: await sharedPreferences.retrieveData('password'),
+        score: score);
 
-  Future<bool> updateUser(User user) async =>
-      await _userDatatasource.updateUser(user);
+    await UserDataSource().updateUser(user);
+  }
 
   Future<bool> deleteUser(int id) async =>
       await _userDatatasource.deleteUser(id);
-
-  Future<bool> simulateProcess() async =>
-      await _userDatatasource.simulateProcess(_baseUrl, token);
 }

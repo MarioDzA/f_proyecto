@@ -2,6 +2,7 @@ import 'package:f_elproyecto/domain/use_cases/diff_usecase.dart';
 import 'package:f_elproyecto/domain/use_cases/test_usecase.dart';
 import 'package:f_elproyecto/pages/TestPagefiles/keypad.dart';
 import 'package:f_elproyecto/pages/controllers/number_controller.dart';
+import 'package:f_elproyecto/pages/home.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -47,10 +48,20 @@ class _TestPagestate extends State<TestPage> {
   }
 
   Dificultad handler = Get.find();
+  int cont = 0;
   void sendInput() {
-    casehandler.checkOperation();
-    controller.resetResult();
-    clearAll();
+    if (cont <= 5) {
+      casehandler.checkOperation(controller.op1, controller.op2,
+          controller.result, controller.operator, cont);
+      cont++;
+      controller.resetResult();
+      clearAll();
+    } else {
+      cont = 0;
+      Get.to(HomePage(
+        key: const Key('HomePage'),
+      ));
+    }
   }
 
   void clearAll() {
