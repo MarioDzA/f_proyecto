@@ -1,6 +1,4 @@
-import 'package:f_elproyecto/domain/repo/repository.dart';
 import 'package:f_elproyecto/domain/use_cases/diff_usecase.dart';
-import 'package:f_elproyecto/domain/use_cases/test_usecase.dart';
 import 'package:f_elproyecto/pages/TestPagefiles/testpage.dart';
 import 'package:f_elproyecto/pages/controllers/authcontroller.dart';
 import 'package:flutter/material.dart';
@@ -26,7 +24,6 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Dificultad handler = Get.find();
-    CasoDificultad casehandler = Get.find();
     return Scaffold(
       appBar: AppBar(
         title: const Text("Math test"),
@@ -47,18 +44,10 @@ class HomePage extends StatelessWidget {
               onPressed: () async {
                 try {
                   //Gens base case
-                  //solve this shit...
-                  print(Repository().getscore());
-                  // int score = ;
-                  // if (score != 0) {
-                  //   casehandler.changeScore(score);
-                  // } else {
-                  //   casehandler.changeScore(100);
-                  // }
-                  // handler.casegenerator();
-                  // Get.to(const TestPage(
-                  //   key: Key('TestPage'),
-                  // ));
+                  handler.casegenerator();
+                  Get.to(const TestPage(
+                    key: Key('TestPage'),
+                  ));
                 } catch (e) {
                   print(e);
                 }
