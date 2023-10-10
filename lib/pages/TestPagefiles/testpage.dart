@@ -101,10 +101,15 @@ class _TestPagestate extends State<TestPage> {
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 12),
                 child: TextField(
+                  style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 50,
+                      color: Colors.black),
                   controller: numberPad,
                   autofocus: true,
                   showCursor: true,
                   keyboardType: TextInputType.none,
+                  enabled: false,
                   decoration: const InputDecoration(
                     filled: true,
                     fillColor: Color.fromARGB(255, 255, 255, 255),
