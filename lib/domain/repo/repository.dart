@@ -72,7 +72,8 @@ class Repository {
         school: await sharedPreferences.retrieveData('school'),
         grade: await sharedPreferences.retrieveData('grade'),
         score: score);
-
+        print(user.firstName);
+    sharedPreferences.storeData<int>("score", score as int);
     await UserDataSource().updateUser(user);
   }
 

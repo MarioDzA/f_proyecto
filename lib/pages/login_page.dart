@@ -1,6 +1,4 @@
 import 'package:f_elproyecto/pages/controllers/authcontroller.dart';
-import 'package:f_elproyecto/pages/home.dart';
-import 'package:f_elproyecto/pages/signup_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:loggy/loggy.dart';
@@ -79,9 +77,7 @@ class _LoginPageState extends State<LoginPage> {
                     if (_formKey.currentState!.validate()) {
                       await _login(
                           controllerEmail.text, controllerPassword.text);
-                      Get.to(HomePage(
-                        key: const Key('HomePage'),
-                      ));
+                      Get.offNamed("/Home");
                     }
                   },
                   child: const Text('Submit'),
@@ -92,9 +88,7 @@ class _LoginPageState extends State<LoginPage> {
                 child: ElevatedButton(
                   key: const Key('Buttoncreateaccount'),
                   onPressed: () {
-                    Get.to(const SignUpPage(
-                      key: Key('SignUpPage'),
-                    ));
+                    Get.offNamed("/Sign_up");
                   },
                   child: const Text('Sign Up'),
                 ),

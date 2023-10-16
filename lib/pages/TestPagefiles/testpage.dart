@@ -2,7 +2,6 @@ import 'package:f_elproyecto/domain/use_cases/diff_usecase.dart';
 import 'package:f_elproyecto/domain/use_cases/test_usecase.dart';
 import 'package:f_elproyecto/pages/TestPagefiles/keypad.dart';
 import 'package:f_elproyecto/pages/controllers/number_controller.dart';
-import 'package:f_elproyecto/pages/home.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -51,16 +50,18 @@ class _TestPagestate extends State<TestPage> {
   int cont = 0;
   void sendInput() {
     if (cont <= 5) {
-      casehandler.checkOperation(controller.op1, controller.op2,
-          controller.result, controller.operator, cont);
-      cont++;
+      if (controller.result != "") {
+        casehandler.checkOperation(controller.op1, controller.op2,
+            controller.result, controller.operator, cont);
+        cont++;
+      }else{
+        controller.setinfotext("You have to write something...");
+      }
       controller.resetResult();
       clearAll();
     } else {
       cont = 0;
-      Get.to(HomePage(
-        key: const Key('HomePage'),
-      ));
+      Get.offNamed("/Home");
     }
   }
 
@@ -86,7 +87,7 @@ class _TestPagestate extends State<TestPage> {
           Expanded(
               child: Center(
             child: Padding(
-                padding: const EdgeInsets.fromLTRB(0, 15, 0, 15),
+                padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
                 child: SizedBox(
                     child: Row(
                   children: [
@@ -108,11 +109,11 @@ class _TestPagestate extends State<TestPage> {
           Expanded(
             child: Center(
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 12),
+                padding: const EdgeInsets.symmetric(horizontal: 10),
                 child: TextField(
                   style: const TextStyle(
                       fontWeight: FontWeight.bold,
-                      fontSize: 50,
+                      fontSize: 40,
                       color: Colors.black),
                   controller: numberPad,
                   autofocus: true,

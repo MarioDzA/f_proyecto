@@ -136,7 +136,7 @@ class _SignUpPageState extends State<SignUpPage> {
                         "school": _schoolController.text,
                       };
                       await _signUp(fromobjc);
-                      Get.back();
+                      Get.offNamed("/login_page");
                     }
                   },
                   child: const Text('Submit'),

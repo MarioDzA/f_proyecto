@@ -1,6 +1,5 @@
 import 'package:f_elproyecto/domain/use_cases/diff_usecase.dart';
 import 'package:f_elproyecto/domain/use_cases/hub_usecase.dart';
-import 'package:f_elproyecto/pages/TestPagefiles/testpage.dart';
 import 'package:f_elproyecto/pages/controllers/authcontroller.dart';
 import 'package:f_elproyecto/pages/controllers/hubcontroller.dart';
 import 'package:f_elproyecto/pages/login_page.dart';
@@ -32,6 +31,7 @@ class HomePage extends StatelessWidget {
     Hubdata userinfo = Get.find();
     Hubusecase hubcontroller = Get.find();
     hubcontroller.setuser();
+    print("0ewugnweug");
     return Scaffold(
         appBar: AppBar(
           title: const Text('Math test, Welcome back'),
@@ -65,9 +65,7 @@ class HomePage extends StatelessWidget {
                       try {
                         //Gens base case
                         handler.casegenerator();
-                        Get.to(const TestPage(
-                          key: Key('TestPage'),
-                        ));
+                        Get.offNamed("/Test");
                       } catch (e) {
                         print(e);
                       }
