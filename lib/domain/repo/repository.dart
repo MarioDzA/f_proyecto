@@ -18,7 +18,13 @@ class Repository {
     var user = await dBdata.getUserbyquery(email);
     if (user.password == password) {
       sharedPreferences.storeData("email", user.email);
+      sharedPreferences.storeData("name", user.name);
+      sharedPreferences.storeData("firstname", user.firstName);
+      sharedPreferences.storeData("lastname", user.lastName);
       sharedPreferences.storeData("password", user.password);
+      sharedPreferences.storeData("birthday", user.birthday);
+      sharedPreferences.storeData("grade", user.grade);
+      sharedPreferences.storeData("school", user.school);
       sharedPreferences.storeData<int>("id", user.id as int);
       sharedPreferences.storeData<int>("score", user.score as int);
       return true;
@@ -42,6 +48,15 @@ class Repository {
     return score;
   }
 
+  Future<String> getusername() async {
+    try {
+      String name = await sharedPreferences.retrieveData("name");
+      return name;
+    } catch (e) {
+      return "User";
+    }
+  }
+
   Future<bool> logOut() async => await _authenticationDataSource.logOut();
 
   Future<List<User>> getUsers() async => await _userDatatasource.getUsers();
@@ -51,6 +66,11 @@ class Repository {
         id: await sharedPreferences.retrieveData("id"),
         email: await sharedPreferences.retrieveData('email'),
         password: await sharedPreferences.retrieveData('password'),
+        firstName: await sharedPreferences.retrieveData('firstname'),
+        lastName: await sharedPreferences.retrieveData('lastname'),
+        birthday: await sharedPreferences.retrieveData('birthday'),
+        school: await sharedPreferences.retrieveData('school'),
+        grade: await sharedPreferences.retrieveData('grade'),
         score: score);
 
     await UserDataSource().updateUser(user);

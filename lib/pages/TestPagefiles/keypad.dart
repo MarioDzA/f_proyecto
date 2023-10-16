@@ -11,7 +11,7 @@ class KeyPad extends StatelessWidget {
     required this.sendInput,
   });
 
-  final ValueSetter<int> onInputNumber;
+  final ValueSetter<String> onInputNumber;
   final VoidCallback onClearLastInput;
   final VoidCallback onClearAll;
   final VoidCallback sendInput;
@@ -20,6 +20,11 @@ class KeyPad extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
+        Expanded(
+            child: NonNumeral(
+          value: "-",
+          onKeyPress: () => onInputNumber("-"),
+        )),
         for (int i = 1; i < 4; i++)
           Expanded(
             child: Row(
@@ -29,7 +34,8 @@ class KeyPad extends StatelessWidget {
                   Expanded(
                     child: Numeral(
                       number: (i - 1) * 3 + j,
-                      onKeyPress: () => onInputNumber((i - 1) * 3 + j),
+                      onKeyPress: () =>
+                          onInputNumber(((i - 1) * 3 + j).toString()),
                     ),
                   ),
               ],
@@ -48,7 +54,7 @@ class KeyPad extends StatelessWidget {
               Expanded(
                   child: Numeral(
                 number: 0,
-                onKeyPress: () => onInputNumber(0),
+                onKeyPress: () => onInputNumber(0.toString()),
               )),
               Expanded(
                 child: SendButton(
@@ -78,12 +84,41 @@ class Numeral extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.all(5),
       child: OutlinedButton(
-        style:  OutlinedButton.styleFrom(
-          backgroundColor:const Color.fromARGB(255, 69, 127, 253),
+        style: OutlinedButton.styleFrom(
+          backgroundColor: const Color.fromARGB(255, 69, 127, 253),
           shape: const CircleBorder(),
         ),
         onPressed: onKeyPress,
         child: Text('$number',
+            style: const TextStyle(
+              color: Color.fromARGB(255, 255, 255, 255),
+            )),
+      ),
+    );
+  }
+}
+
+class NonNumeral extends StatelessWidget {
+  const NonNumeral({
+    super.key,
+    required this.value,
+    required this.onKeyPress,
+  });
+
+  final String value;
+  final VoidCallback onKeyPress;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: const EdgeInsets.all(5),
+      child: OutlinedButton(
+        style: OutlinedButton.styleFrom(
+          backgroundColor: const Color.fromARGB(255, 133, 69, 253),
+          shape: const CircleBorder(),
+        ),
+        onPressed: onKeyPress,
+        child: Text(value,
             style: const TextStyle(
               color: Color.fromARGB(255, 255, 255, 255),
             )),

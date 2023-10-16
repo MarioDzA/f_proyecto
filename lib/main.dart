@@ -1,7 +1,9 @@
 import 'package:f_elproyecto/data/remote/userdata.dart';
 import 'package:f_elproyecto/domain/use_cases/diff_usecase.dart';
+import 'package:f_elproyecto/domain/use_cases/hub_usecase.dart';
 import 'package:f_elproyecto/domain/use_cases/test_usecase.dart';
 import 'package:f_elproyecto/pages/controllers/authcontroller.dart';
+import 'package:f_elproyecto/pages/controllers/hubcontroller.dart';
 import 'package:f_elproyecto/pages/controllers/number_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -20,6 +22,8 @@ void main() {
     ),
   );
   Get.put(UserDataSource());
+  Get.put(Hubdata());
+  Get.put(Hubusecase());
   Get.put(Repository());
   Get.put(AuthenticationUseCase());
   Get.put(AuthenticationController());

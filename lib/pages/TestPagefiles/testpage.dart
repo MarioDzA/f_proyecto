@@ -32,7 +32,7 @@ class _TestPagestate extends State<TestPage> {
     super.dispose();
   }
 
-  void inputNumber(int value) {
+  void inputNumber(String value) {
     numberPad.text += value.toString();
     controller.resetResult();
     controller.setResult(numberPad.text);
@@ -74,6 +74,15 @@ class _TestPagestate extends State<TestPage> {
       backgroundColor: const Color.fromARGB(255, 255, 255, 255),
       body: Column(
         children: <Widget>[
+          Expanded(
+            child: Center(
+              child: Obx(
+                () => Text(controller.infotext.toString(),
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(fontSize: 20)),
+              ),
+            ),
+          ),
           Expanded(
               child: Center(
             child: Padding(

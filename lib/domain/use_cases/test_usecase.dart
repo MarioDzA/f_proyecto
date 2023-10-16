@@ -29,7 +29,7 @@ class CasoDificultad {
       controller.setOp2(Random().nextInt(1000));
       controller.setOperator("+");
     }
-    print((controller.op1 + controller.op2).round());
+    print((controller.op1 * controller.op2).round());
   }
 
   updateuserafter(score) async {
@@ -43,7 +43,9 @@ class CasoDificultad {
         if (op1 + op2 == int.parse(result)) {
           if (cont < 5) {
             generateCase();
+            controller.resetinfotext();
           } else {
+            controller.setinfotext("You're Done!, press send again to coninue");
             stopwatch.stop();
             newScore = (stopwatch.elapsed.inSeconds);
             changeScore(newScore);
@@ -52,13 +54,16 @@ class CasoDificultad {
           }
           controller.resetResult();
         } else {
+          controller.setinfotext("Incorrect Answerd, try again.");
           controller.resetResult();
         }
       case "-":
         if (op1 - op2 == int.parse(result)) {
           if (cont < 5) {
             generateCase();
+            controller.resetinfotext();
           } else {
+            controller.setinfotext("You're Done!, press send again to coninue");
             stopwatch.stop();
             newScore = (stopwatch.elapsed.inSeconds);
             changeScore(newScore);
@@ -67,13 +72,16 @@ class CasoDificultad {
           }
           controller.resetResult();
         } else {
+          controller.setinfotext("Incorrect Answerd, try again.");
           controller.resetResult();
         }
       case "*":
         if (op1 * op2 == int.parse(result)) {
           if (cont < 5) {
             generateCase();
+            controller.resetinfotext();
           } else {
+            controller.setinfotext("You're Done!, press send again to coninue");
             stopwatch.stop();
             newScore = (stopwatch.elapsed.inSeconds);
             changeScore(newScore);
@@ -82,13 +90,16 @@ class CasoDificultad {
           }
           controller.resetResult();
         } else {
+          controller.setinfotext("Incorrect Answerd, try again");
           controller.resetResult();
         }
       case "/":
         if (op1 / op2 == int.parse(result)) {
           if (cont < 5) {
             generateCase();
+            controller.resetinfotext();
           } else {
+            controller.setinfotext("You're Done!, press send again to coninue");
             stopwatch.stop();
             newScore = (stopwatch.elapsed.inSeconds);
             changeScore(newScore);
@@ -97,6 +108,7 @@ class CasoDificultad {
           }
           controller.resetResult();
         } else {
+          controller.setinfotext("Incorrect Answerd, try again.");
           controller.resetResult();
         }
       default:
