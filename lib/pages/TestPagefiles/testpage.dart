@@ -54,7 +54,7 @@ class _TestPagestate extends State<TestPage> {
         casehandler.checkOperation(controller.op1, controller.op2,
             controller.result, controller.operator, cont);
         cont++;
-      }else{
+      } else {
         controller.setinfotext("You have to write something...");
       }
       controller.resetResult();

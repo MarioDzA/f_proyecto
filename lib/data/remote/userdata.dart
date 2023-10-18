@@ -59,6 +59,7 @@ class UserDataSource {
     }));
 
     var response = await http.get(request);
+    print(jsonDecode(response.body));
     if (response.statusCode == 200) {
       //logInfo(response.body);
       final data = jsonDecode(response.body)[0];
