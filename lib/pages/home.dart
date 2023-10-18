@@ -31,7 +31,6 @@ class HomePage extends StatelessWidget {
     Hubdata userinfo = Get.find();
     Hubusecase hubcontroller = Get.find();
     hubcontroller.setuser();
-    print("0ewugnweug");
     return Scaffold(
         appBar: AppBar(
           title: const Text('Math test, Welcome back'),
